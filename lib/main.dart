@@ -14,6 +14,22 @@ class ListaTarefas extends StatelessWidget {
 }
 
 class ListaScreen extends StatelessWidget {
+  Widget getItemRow() {
+    return new Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      IconButton(
+          icon: new Icon(
+            Icons.check_box,
+            color: Colors.lightGreen,
+          ),
+          iconSize: 42.0,
+          onPressed: () {}),
+      new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [Text("Lavar o carro"), Text("30/01/2021")],
+      )
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -25,19 +41,30 @@ class ListaScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          new Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            IconButton(
-                icon: new Icon(
-                  Icons.check_box,
-                  color: Colors.lightGreen,
-                ),
-                iconSize: 42.0,
-                onPressed: () {}),
-            new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text("Lavar o carro"), Text("30/01/2021")],
-            )
-          ])
+          Expanded(
+              child: ListView(
+            children: <Widget>[
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow(),
+              getItemRow()
+            ],
+          ))
         ],
       ),
     );

@@ -38,11 +38,19 @@ class ListaTarefas extends State<ListaScreen> {
     return new Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
       IconButton(
           icon: new Icon(
-            Icons.check_box,
+            tarefa.concluido ? Icons.check_box : Icons.check_box_outline_blank,
             color: Colors.lightGreen,
           ),
           iconSize: 42.0,
-          onPressed: () {}),
+          onPressed: () {
+            setState(() {
+              if (!tarefa.concluido) {
+                tarefa.concluido = true;
+              } else {
+                tarefa.concluido = false;
+              }
+            });
+          }),
       new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +58,7 @@ class ListaTarefas extends State<ListaScreen> {
             tarefa.nome,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
-          Text(tarefa.data.toIso8601String())
+          Text(tarefa.converteData())
         ],
       )
     ]);
@@ -71,8 +79,7 @@ class ListaTarefas extends State<ListaScreen> {
               padding: EdgeInsets.all(8.0),
               child: TextField(
                 controller: controller,
-                onSubmitted: adicionaTarefa
-                },
+                onSubmitted: adicionaTarefa,
               )),
           Expanded(
               child: ListView.builder(

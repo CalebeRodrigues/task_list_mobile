@@ -2,23 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:lista_tarefas_app/tarefa.dart';
 
 void main() {
-  runApp(new ListaTarefas());
+  runApp(new Lista());
 }
 
-class ListaTarefas extends StatelessWidget {
+class Lista extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      title: 'Lista app',
       home: new ListaScreen(),
     );
   }
 }
 
-class ListaScreen extends StatelessWidget {
+class ListaScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new ListaTarefas();
+  }
+}
+
+class ListaTarefas extends State<ListaScreen> {
   List<Tarefa> tarefas = new List<Tarefa>();
+  TextEditingController controller = new TextEditingController();
 
   void adicionaTarefa(String tarefa) {
-    tarefas.add(new Tarefa(tarefa));
+    setState(() {
+      tarefas.add(new Tarefa(tarefa));
+    });
+
+    controller.clear();
   }
 
   Widget getItemRow(Tarefa tarefa) {
@@ -57,16 +70,16 @@ class ListaScreen extends StatelessWidget {
           Container(
               padding: EdgeInsets.all(8.0),
               child: TextField(
-                onSubmitted: (value) {
-                  adicionaTarefa(value);
+                controller: controller,
+                onSubmitted: adicionaTarefa
                 },
               )),
           Expanded(
-              child: ListView(
-            children: <Widget>[
-              getItemRow(new Tarefa("Lavar o carro")),
-              getItemRow(new Tarefa("Escovar os dentes")),
-            ],
+              child: ListView.builder(
+            itemCount: tarefas.length,
+            itemBuilder: (_, indice) {
+              return getItemRow(tarefas[indice]);
+            },
           ))
         ],
       ),
